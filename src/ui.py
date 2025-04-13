@@ -32,7 +32,7 @@ def construir_interface():
             tag = f"checkbox_servico_{i}"
             checkbox_tags_servicos.append(tag)  # salvando o serviço marcado
             dpg.add_checkbox(
-                label=f"{servico[1]} - R${servico[2]:.2f}")
+                label=f"{servico[1]} - R${servico[2]:.2f}", tag=tag)
 
         dpg.add_button(label="Gerar PDF", callback=gerar_pdf)
         dpg.add_text("", tag="mensagem_pdf", show=False, color=[0, 200, 0])

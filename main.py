@@ -4,7 +4,7 @@ from database.db import *
 
 init_db()
 dpg.create_context()
-dpg.create_viewport(title='Sistema de Orçamentos', width=1000, height=650)
+dpg.create_viewport(title='Sistema de Orcamentos', width=1000, height=650)
 
 construir_interface()
 

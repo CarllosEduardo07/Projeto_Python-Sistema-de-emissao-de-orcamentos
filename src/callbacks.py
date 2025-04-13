@@ -39,7 +39,8 @@ def gerar_pdf():
         mostrar_mensagem("mensagem_pdf", "⚠️ Nenhum serviço selecionado!")
         return
 
-    for s in servicos_marcados:
-        print(f"✅ {s[1]} - R$ {s[2]:.2f}")  # s[1] = nome_servico, s[2] = valor
+    valor_total = sum(s[2] for s in servicos_marcados)
+
+    print(f"\n💰 Valor total: R$ {valor_total:.2f}")
 
     mostrar_mensagem("mensagem_pdf", "📄 PDF gerado com sucesso!")
