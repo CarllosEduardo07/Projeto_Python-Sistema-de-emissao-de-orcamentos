@@ -1,0 +1,28 @@
+import dearpygui.dearpygui as dpg
+from src.callbacks import cadastrar_dados_cliente, cadastrar_dados_servico, gerar_pdf
+
+
+def construir_interface():
+    with dpg.window(label="Cadastro de Clientes", width=480, height=300, pos=(10, 10)):
+        dpg.add_input_text(label="Nome", tag="campo_nome")
+        dpg.add_input_text(label="Email", tag="campo_email")
+        dpg.add_button(label="Cadastrar Cliente",
+                       callback=cadastrar_dados_cliente)
+        dpg.add_text("", tag="mensagem_cliente", show=False, color=[0, 200, 0])
+
+    with dpg.window(label="Cadastro de Serviços", width=480, height=300, pos=(500, 10)):
+        dpg.add_input_text(label="Nome do Serviço", tag="campo_servico")
+        dpg.add_input_text(label="Valor", tag="campo_valor")
+        dpg.add_button(label="Cadastrar Serviço",
+                       callback=cadastrar_dados_servico)
+        dpg.add_text("", tag="mensagem_servico", show=False, color=[0, 200, 0])
+
+    with dpg.window(label="Geração de PDF", width=970, height=300, pos=(0, 310)):
+        dpg.add_combo(
+            label="Menu de Seleção",
+            items=["Opção 1", "Opção 2", "Opção 3"],
+            default_value="Opção 1"
+        )
+        dpg.add_checkbox(label="Escolher Serviço", tag="nome_do_servico")
+        dpg.add_button(label="Gerar PDF", callback=gerar_pdf)
+        dpg.add_text("", tag="mensagem_pdf", show=False, color=[0, 200, 0])
