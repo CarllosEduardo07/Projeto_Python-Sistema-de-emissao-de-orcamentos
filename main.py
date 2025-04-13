@@ -1,7 +1,8 @@
 import dearpygui.dearpygui as dpg
 from src.ui import construir_interface
+from database.db import *
 
-
+init_db()
 dpg.create_context()
 dpg.create_viewport(title='Sistema de Orçamentos', width=1000, height=650)
 
