@@ -2,6 +2,17 @@ import dearpygui.dearpygui as dpg
 from src.utils import mostrar_mensagem
 
 
+servicos_cadastrados = [
+    {"nome": "manutenção de computador", "valor": 100},
+    {"nome": "manutenção de Notebook", "valor": 130},
+    {"nome": "limpeza do computador", "valor": 70},
+    {"nome": "troca do teclado do Notebook", "valor": 150},
+    {"nome": "troca da bateria", "valor": 120},
+]
+
+checkbox_tags_servicos = []  # salva os serviços marcados
+
+
 def cadastrar_dados_cliente():
     nome = dpg.get_value("campo_nome")
     email = dpg.get_value("campo_email")
@@ -21,6 +32,18 @@ def cadastrar_dados_servico():
 
 
 def gerar_pdf():
-    servico = dpg.get_value("nome_do_servico")
-    print(f"Gerando PDF do serviço: {servico}")
+
+    servicos_marcados = []  # pegando os serviços marcados
+    for tag, servico in zip(checkbox_tags_servicos, servicos_cadastrados):
+        if dpg.get_value(tag):
+            servicos_marcados.append(servico)
+
+    if not servicos_marcados:  # validação
+        mostrar_mensagem("mensagem_pdf", "⚠️ Nenhum serviço selecionado!")
+        return
+
+   # print
+    for s in servicos_marcados:
+        print(f"✅ {s['nome']} - R$ {s['valor']}")
+
     mostrar_mensagem("mensagem_pdf", "📄 PDF gerado com sucesso!")

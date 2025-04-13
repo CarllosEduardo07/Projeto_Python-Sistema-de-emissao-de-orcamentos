@@ -1,5 +1,5 @@
 import dearpygui.dearpygui as dpg
-from src.callbacks import cadastrar_dados_cliente, cadastrar_dados_servico, gerar_pdf
+from src.callbacks import cadastrar_dados_cliente, cadastrar_dados_servico, gerar_pdf, servicos_cadastrados, checkbox_tags_servicos
 
 
 def construir_interface():
@@ -17,12 +17,17 @@ def construir_interface():
                        callback=cadastrar_dados_servico)
         dpg.add_text("", tag="mensagem_servico", show=False, color=[0, 200, 0])
 
+    # gerar PDF
     with dpg.window(label="Geração de PDF", width=970, height=300, pos=(0, 310)):
-        dpg.add_combo(
-            label="Menu de Seleção",
-            items=["Opção 1", "Opção 2", "Opção 3"],
-            default_value="Opção 1"
-        )
-        dpg.add_checkbox(label="Escolher Serviço", tag="nome_do_servico")
+
+        dpg.add_text("Escolha os serviços:")
+
+        checkbox_tags_servicos.clear()
+        for i, servico in enumerate(servicos_cadastrados):
+            tag = f"checkbox_servico_{i}"
+            checkbox_tags_servicos.append(tag)  # salvando o serviço marcado
+            dpg.add_checkbox(
+                label=f"{servico['nome']} - R${servico['valor']:.2f}", tag=tag)
+
         dpg.add_button(label="Gerar PDF", callback=gerar_pdf)
         dpg.add_text("", tag="mensagem_pdf", show=False, color=[0, 200, 0])
