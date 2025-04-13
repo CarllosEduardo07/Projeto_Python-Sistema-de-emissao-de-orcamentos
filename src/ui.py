@@ -1,5 +1,5 @@
 import dearpygui.dearpygui as dpg
-from src.callbacks import cadastrar_dados_cliente, cadastrar_dados_servico, gerar_pdf, checkbox_tags_servicos
+from src.callbacks import cadastrar_dados_cliente, cadastrar_dados_servico, gerar_pdf, checkbox_tags_servicos, select_tags_clientes
 
 from database.db import *
 
@@ -22,12 +22,20 @@ def construir_interface():
     # gerar PDF
     with dpg.window(label="Geração de PDF", width=970, height=300, pos=(0, 310)):
 
-        dpg.add_text("Escolha os serviços:")
+        nome_clientes_cadastrados = get_lista_cliente()
 
+        nomes = [nome[1] for nome in nome_clientes_cadastrados]
+        dpg.add_text("Selecione o nome do cliente:")
+
+        dpg.add_combo(items=nomes, label="Selecione um Cliente",
+                      tag="select_cliente")
+
+    # ==========================================================================================
+
+        dpg.add_text("Escolha os serviços:")
         checkbox_tags_servicos.clear()
 
         servicos_cadastrados = get_lista_servicos()  # pegando os dados do banco
-
         for i, servico in enumerate(servicos_cadastrados):
             tag = f"checkbox_servico_{i}"
             checkbox_tags_servicos.append(tag)  # salvando o serviço marcado

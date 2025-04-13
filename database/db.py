@@ -32,6 +32,7 @@ def create_cliente(nome, email):
     conn.commit()
     conn.close()
 
+
 def create_servico(nome_servico, valor):
     conn = sqlite3.connect("loja.db")
     cursor = conn.cursor()
@@ -42,6 +43,7 @@ def create_servico(nome_servico, valor):
     conn.commit()
     conn.close()
 
+
 def get_cliente_nome(nome):
     conn = sqlite3.connect("loja.db")
     cursor = conn.cursor()
@@ -50,6 +52,7 @@ def get_cliente_nome(nome):
     conn.close
     return cliente
 
+
 def get_servicos_nome(nome_servico):
     conn = sqlite3.connect("loja.db")
     cursor = conn.cursor()
@@ -57,6 +60,7 @@ def get_servicos_nome(nome_servico):
     servico = cursor.fetchall()
     conn.close
     return servico
+
 
 def get_lista_cliente():
     conn = sqlite3.connect("loja.db")
@@ -67,6 +71,7 @@ def get_lista_cliente():
 
     return cliente
 
+
 def get_lista_servicos():
     conn = sqlite3.connect("loja.db")
     cursor = conn.cursor()
@@ -75,12 +80,3 @@ def get_lista_servicos():
     conn.close()
 
     return cliente
-
-    
-init_db()
-# create_cliente("Matheus", "m@m.com")
-# create_servico("Limpeza", 200)
-
-mostar = get_lista_servicos()
-
-print(mostar)
