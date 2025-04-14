@@ -1,5 +1,5 @@
 import dearpygui.dearpygui as dpg
-from src.callbacks import cadastrar_dados_cliente, cadastrar_dados_servico, gerar_pdf, checkbox_tags_servicos, select_tags_clientes
+from src.callbacks import cadastrar_dados_cliente, cadastrar_dados_servico, gerar_servico, checkbox_tags_servicos, select_tags_clientes
 
 from database.db import *
 
@@ -42,5 +42,5 @@ def construir_interface():
             dpg.add_checkbox(
                 label=f"{servico[1]} - R${servico[2]:.2f}", tag=tag)
 
-        dpg.add_button(label="Gerar PDF", callback=gerar_pdf)
+        dpg.add_button(label="Gerar PDF", callback=gerar_servico)
         dpg.add_text("", tag="mensagem_pdf", show=False, color=[0, 200, 0])
