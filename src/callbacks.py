@@ -1,5 +1,5 @@
 import dearpygui.dearpygui as dpg
-from src.utils import mostrar_mensagem
+from src.utils import atualizar_interface, mostrar_mensagem, checkbox_tags_servicos, servicos_cadastrados
 from database.db import *
 
 # pdf
@@ -8,33 +8,30 @@ from reportlab.lib.pagesizes import A4
 import datetime
 
 
-checkbox_tags_servicos = []  # salva os checkboxes
-select_tags_clientes = []  # salva os checkboxes
-servicos_cadastrados = get_lista_servicos()    # salva os serviços do banco
-
-
 def cadastrar_dados_cliente():
     nome = dpg.get_value("campo_nome")
     email = dpg.get_value("campo_email")
     create_cliente(nome, email)
-    # print(f"Nome: {nome}")
-    # print(f"Email: {email}")
     mostrar_mensagem("mensagem_cliente", "✅ Cliente cadastrado com sucesso!", limpar_tags=[
                      "campo_nome", "campo_email"])
+
+    atualizar_interface()
 
 
 def cadastrar_dados_servico():
     servico = dpg.get_value("campo_servico")
     valor = dpg.get_value("campo_valor")
     create_servico(servico, valor)
-    # print(f"Serviço: {servico}")
-    # print(f"Valor: {valor}")
     mostrar_mensagem("mensagem_servico", "✅ Serviço cadastrado com sucesso!", limpar_tags=[
                      "campo_servico", "campo_valor"])
 
+    atualizar_interface()
+
 
 def gerar_servico():
-    global servicos_cadastrados
+
+    # Recarregar a lista de serviços cadastrados, garantindo que o mais recente esteja incluso
+    servicos_cadastrados = get_lista_servicos()
 
     servicos_marcados = []
     for tag, servico in zip(checkbox_tags_servicos, servicos_cadastrados):
@@ -51,12 +48,9 @@ def gerar_servico():
     valor_total = sum(s[2]
                       for s in servicos_marcados)  # valor total dos serviços
 
-    # print(f"👤 Cliente: {cliente_selecionado}")
-    # print(f"\n💰 Valor total: R$ {valor_total:.2f}")
-
     mostrar_mensagem("mensagem_pdf", "📄 PDF gerado com sucesso!")
 
-    # pegando os valores das variaveis
+    # pegando os valores das variáveis
     criar_pdf(cliente_selecionado, servicos_marcados, valor_total)
 
 
