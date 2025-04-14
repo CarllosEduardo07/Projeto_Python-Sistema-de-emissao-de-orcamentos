@@ -11,8 +11,13 @@ import datetime
 def cadastrar_dados_cliente():
     nome = dpg.get_value("campo_nome")
     email = dpg.get_value("campo_email")
+
+    if not (nome and email):  # validação
+        mostrar_mensagem("mensagem_cliente", "Preencha todos os campos!")
+        return
+
     create_cliente(nome, email)
-    mostrar_mensagem("mensagem_cliente", "✅ Cliente cadastrado com sucesso!", limpar_tags=[
+    mostrar_mensagem("mensagem_cliente", "Cliente cadastrado com sucesso!", limpar_tags=[
                      "campo_nome", "campo_email"])
 
     atualizar_interface()
@@ -21,8 +26,13 @@ def cadastrar_dados_cliente():
 def cadastrar_dados_servico():
     servico = dpg.get_value("campo_servico")
     valor = dpg.get_value("campo_valor")
+
+    if not (servico and valor):  # validação
+        mostrar_mensagem("mensagem_servico", "Preencha todos os campos!")
+        return
+
     create_servico(servico, valor)
-    mostrar_mensagem("mensagem_servico", "✅ Serviço cadastrado com sucesso!", limpar_tags=[
+    mostrar_mensagem("mensagem_servico", "Serviço cadastrado com sucesso!", limpar_tags=[
                      "campo_servico", "campo_valor"])
 
     atualizar_interface()
@@ -38,12 +48,12 @@ def gerar_servico():
         if dpg.get_value(tag):
             servicos_marcados.append(servico)
 
-    if not servicos_marcados:  # validação
-        mostrar_mensagem("mensagem_pdf", "⚠️ Nenhum serviço selecionado!")
-        return
-
-    # ✅ pega o cliente selecionado
+     # pega o cliente selecionado
     cliente_selecionado = dpg.get_value("select_cliente")
+
+    if not (cliente_selecionado and servicos_marcados):  # validação
+        mostrar_mensagem("mensagem_pdf", "Selecione todos os campos!!")
+        return
 
     valor_total = sum(s[2]
                       for s in servicos_marcados)  # valor total dos serviços
